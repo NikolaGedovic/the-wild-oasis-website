@@ -1,13 +1,15 @@
+// app/components/Navigation.js
 import Link from "next/link";
 import { auth } from "../_lib/auth";
+import HamburgerMenu from "./HamburgerMenu";
 
 export default async function Navigation() {
   const session = await auth();
-  console.log(session);
 
   return (
-    <nav className="z-10 text-xl">
-      <ul className="flex items-center gap-16">
+    <nav className="relative z-10">
+      {/* Desktop Navigation */}
+      <ul className="items-center hidden gap-16 text-xl md:flex">
         <li>
           <Link
             href="/cabins"
@@ -31,10 +33,10 @@ export default async function Navigation() {
               className="flex items-center gap-4 transition-colors hover:text-accent-400"
             >
               <img
-                className={"h-8 rounded-full"}
+                className="w-8 h-8 rounded-full"
                 src={session.user.image}
                 alt={session.user.name}
-                referrerPolicy={"no-referrer"}
+                referrerPolicy="no-referrer"
               />
               <span>Guest area</span>
             </Link>
@@ -48,6 +50,9 @@ export default async function Navigation() {
           )}
         </li>
       </ul>
+
+      {/* Mobile Navigation */}
+      <HamburgerMenu session={session} />
     </nav>
   );
 }
