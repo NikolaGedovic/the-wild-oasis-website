@@ -12,8 +12,8 @@ export const metadata = {
 export default async function Page() {
   const cabins = await getCabins();
   return (
-    <div className="grid items-center grid-cols-5 text-lg gap-x-24 gap-y-32">
-      <div className="col-span-3">
+    <div className="grid items-center text-lg gap-8 md:gap-x-24 md:gap-y-32 md:grid-cols-5">
+      <div className="order-1 md:order-none md:col-span-3">
         <h1 className="mb-10 text-4xl font-medium text-accent-400">
           Welcome to The Wild Oasis
         </h1>
@@ -40,7 +40,7 @@ export default async function Page() {
         </div>
       </div>
 
-      <div className="col-span-2">
+      <div className="order-2 md:order-none md:col-span-2">
         <Image
           src={image1}
           alt="Family sitting around a fire pit in front of cabin"
@@ -49,7 +49,7 @@ export default async function Page() {
         />
       </div>
 
-      <div className="relative col-span-2 aspect-square">
+      <div className="order-4 md:order-none relative md:col-span-2 aspect-square">
         <Image
           src="/about-2.jpg"
           fill
@@ -58,7 +58,7 @@ export default async function Page() {
         />
       </div>
 
-      <div className="col-span-3">
+      <div className="order-3 md:order-none md:col-span-3">
         <h1 className="mb-10 text-4xl font-medium text-accent-400">
           Managed by our family since 1962
         </h1>
@@ -79,7 +79,7 @@ export default async function Page() {
             is like coming home.
           </p>
 
-          <div>
+          <div className="hidden md:block">
             <a
               href="/cabins"
               className="inline-block px-8 py-5 mt-4 text-lg font-semibold transition-all bg-accent-500 text-primary-800 hover:bg-accent-600"
@@ -88,6 +88,16 @@ export default async function Page() {
             </a>
           </div>
         </div>
+      </div>
+
+      {/* Mobile-only CTA to achieve text-image-text-image-button order */}
+      <div className="order-5 md:hidden">
+        <a
+          href="/cabins"
+          className="inline-block w-full px-8 py-5 mt-2 text-lg font-semibold text-center transition-all bg-accent-500 text-primary-800 hover:bg-accent-600"
+        >
+          Explore our luxury cabins
+        </a>
       </div>
     </div>
   );
