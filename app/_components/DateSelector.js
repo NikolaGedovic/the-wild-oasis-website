@@ -9,6 +9,7 @@ import {
 import { DayPicker } from "react-day-picker";
 import "react-day-picker/dist/style.css";
 import { useReservation } from "./ReservationContext";
+import { useEffect, useState } from "react";
 
 function isAlreadyBooked(range, datesArr) {
   return (
@@ -21,6 +22,7 @@ function isAlreadyBooked(range, datesArr) {
 }
 
 function DateSelector({ settings, cabin, bookedDates }) {
+  const [monthsToShow, setMonthsToShow] = useState(2);
   const { range, setRange, resetRange } = useReservation();
 
   const displayRange = isAlreadyBooked(range, bookedDates) ? {} : range;
@@ -33,9 +35,27 @@ function DateSelector({ settings, cabin, bookedDates }) {
   const { minBookingLength, maxBookingLength } = settings;
 
   return (
-    <div className="flex flex-col justify-between">
+    <div className="flex flex-col justify-between items-stretch">
+      {/* Responsively choose months count */}
+      {/* Set after first render to avoid SSR/CSR mismatch */}
+      {(() => {
+        // Update months responsively on client only
+        // This IIFE allows us to run a side-effect hook while keeping JSX tidy
+        // eslint-disable-next-line react-hooks/rules-of-hooks
+        useEffect(() => {
+          const updateMonths = () => {
+            const isSmall =
+              typeof window !== "undefined" && window.innerWidth < 768; // md breakpoint
+            setMonthsToShow(isSmall ? 1 : 2);
+          };
+          updateMonths();
+          window.addEventListener("resize", updateMonths);
+          return () => window.removeEventListener("resize", updateMonths);
+        }, []);
+        return null;
+      })()}
       <DayPicker
-        className="pt-12 place-self-center"
+        className="daypicker--stack pt-4 sm:pt-8 place-self-center"
         mode="range"
         onSelect={(range) => setRange(range)}
         selected={displayRange}
@@ -52,29 +72,35 @@ function DateSelector({ settings, cabin, bookedDates }) {
         }
       />
 
-      <div className="flex items-center justify-between px-8 bg-accent-500 text-primary-800 h-[72px]">
-        <div className="flex items-baseline gap-6">
+      <div className="flex items-center justify-between px-4 sm:px-6 md:px-8 bg-accent-500 text-primary-800 h-[64px] sm:h-[72px]">
+        <div className="flex items-baseline gap-4 sm:gap-6">
           <p className="flex items-baseline gap-2">
             {discount > 0 ? (
               <>
-                <span className="text-2xl">${regularPrice - discount}</span>
+                <span className="text-xl sm:text-2xl">
+                  ${regularPrice - discount}
+                </span>
                 <span className="font-semibold line-through text-primary-700">
                   ${regularPrice}
                 </span>
               </>
             ) : (
-              <span className="text-2xl">${regularPrice}</span>
+              <span className="text-xl sm:text-2xl">${regularPrice}</span>
             )}
             <span className="">/night</span>
           </p>
           {numNights ? (
             <>
-              <p className="px-3 py-2 text-2xl bg-accent-600">
+              <p className="px-2 sm:px-3 py-1.5 sm:py-2 text-xl sm:text-2xl bg-accent-600">
                 <span>&times;</span> <span>{numNights}</span>
               </p>
               <p>
-                <span className="text-lg font-bold uppercase">Total</span>{" "}
-                <span className="text-2xl font-semibold">${cabinPrice}</span>
+                <span className="text-base sm:text-lg font-bold uppercase">
+                  Total
+                </span>{" "}
+                <span className="text-xl sm:text-2xl font-semibold">
+                  ${cabinPrice}
+                </span>
               </p>
             </>
           ) : null}
@@ -82,7 +108,7 @@ function DateSelector({ settings, cabin, bookedDates }) {
 
         {range.from || range.to ? (
           <button
-            className="px-4 py-2 text-sm font-semibold border border-primary-800"
+            className="px-3 sm:px-4 py-1.5 sm:py-2 text-xs sm:text-sm font-semibold border border-primary-800"
             onClick={resetRange}
           >
             Clear

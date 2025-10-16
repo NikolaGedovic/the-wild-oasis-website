@@ -25,11 +25,11 @@ export default async function Page({ params }) {
             name="numGuests"
             id="numGuests"
             defaultValue={numGuests}
-            className="w-full px-5 py-3 rounded-sm shadow-sm bg-primary-200 text-primary-800"
+            className="w-full px-2.5 sm:px-4 h-9 sm:h-11 rounded-sm shadow-sm bg-primary-200 text-primary-800 leading-tight"
             required
           >
             <option value="" key="">
-              Select number of guests...
+              Select guests...
             </option>
             {Array.from({ length: maxCapacity }, (_, i) => i + 1).map((x) => (
               <option value={x} key={x}>

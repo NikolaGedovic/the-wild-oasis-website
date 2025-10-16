@@ -26,11 +26,11 @@ function ReservationForm({ cabin, user }) {
   const createBookingWithData = createBooking.bind(null, bookingData);
 
   return (
-    <div className="scale-[1.01]">
-      <div className="flex items-center justify-between px-16 py-2 bg-primary-800 text-primary-300">
+    <div className="md:scale-[1.01]">
+      <div className="flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between px-6 sm:px-10 md:px-16 py-2 bg-primary-800 text-primary-300">
         <p>Logged in as</p>
 
-        <div className="flex items-center gap-4">
+        <div className="flex items-center gap-3 sm:gap-4">
           <img
             // Important to display google profile images
             referrerPolicy="no-referrer"
@@ -48,18 +48,18 @@ function ReservationForm({ cabin, user }) {
           await createBookingWithData(formData);
           resetRange();
         }}
-        className="flex flex-col gap-5 px-16 py-10 text-lg bg-primary-900"
+        className="flex flex-col gap-5 px-6 sm:px-10 md:px-16 py-8 md:py-10 text-base sm:text-lg bg-primary-900"
       >
         <div className="space-y-2">
           <label htmlFor="numGuests">How many guests?</label>
           <select
             name="numGuests"
             id="numGuests"
-            className="w-full px-5 py-3 rounded-sm shadow-sm bg-primary-200 text-primary-800"
+            className="w-full px-2.5 sm:px-4 h-9 sm:h-11 rounded-sm shadow-sm bg-primary-200 text-primary-800 leading-tight"
             required
           >
             <option value="" key="">
-              Select number of guests...
+              Select guests...
             </option>
             {Array.from({ length: maxCapacity }, (_, i) => i + 1).map((x) => (
               <option value={x} key={x}>

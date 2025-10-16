@@ -14,7 +14,7 @@ async function Reservation({ cabin }) {
   return (
     <div
       className="
-    grid grid-cols-1 lg:grid-cols-2
+    grid grid-cols-1 md:grid-cols-2
     
     min-h-[400px]
     border border-primary-800

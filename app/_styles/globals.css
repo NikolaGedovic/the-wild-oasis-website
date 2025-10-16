@@ -37,3 +37,26 @@
   --rdp-background-color: theme("colors.accent.600") !important;
   margin: 0 !important;
 }
+
+/* Stack two months vertically on small screens while keeping two months visible */
+.daypicker--stack .rdp {
+  display: grid;
+  gap: 0.75rem;
+  margin-left: auto;
+  margin-right: auto;
+}
+.daypicker--stack .rdp-months {
+  display: grid;
+  grid-template-columns: 1fr;
+  justify-items: center;
+}
+.daypicker--stack .rdp-month {
+  padding-top: 0.5rem; /* 8px */
+  padding-bottom: 0.5rem; /* 8px */
+}
+@media (min-width: 768px) {
+  .daypicker--stack .rdp-months {
+    grid-template-columns: repeat(2, 1fr);
+    justify-items: stretch;
+  }
+}
