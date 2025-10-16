@@ -15,7 +15,7 @@ function DeleteReservation({ bookingId, onDelete }) {
   return (
     <button
       onClick={handleDelete}
-      className="flex items-center flex-grow gap-2 px-3 text-xs font-bold uppercase transition-colors group text-primary-300 hover:bg-accent-600 hover:text-primary-900"
+      className="flex items-center justify-center md:justify-start flex-1 gap-2 px-3 py-2 md:py-3 text-xs font-bold uppercase transition-colors group text-primary-300 hover:bg-accent-600 hover:text-primary-900"
     >
       {!isPending ? (
         <>

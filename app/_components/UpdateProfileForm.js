@@ -3,21 +3,23 @@
 import { updateGuest } from "../_lib/actions";
 import SubmitButton from "./SubmitButton";
 
-function UpdateProfileForm({ guest, children }) {
-  const { fullName, email, nationality, nationalID, countryFlag } = guest;
+function UpdateProfileForm({ guest }) {
+  const displayFullName = guest?.fullName ?? guest?.name ?? "";
+  const displayEmail = guest?.email ?? "";
+  const nationalID = guest?.nationalID ?? "";
 
   return (
     <form
       action={updateGuest}
-      className="flex flex-col gap-6 px-12 py-8 text-lg bg-primary-900"
+      className="flex flex-col gap-6 px-6 sm:px-10 md:px-12 py-6 md:py-8 text-base sm:text-lg bg-primary-900 max-w-2xl"
     >
       <div className="space-y-2">
         <label>Full name</label>
         <input
           disabled
           name={"fullName"}
-          defaultValue={fullName}
-          className="w-full px-5 py-3 rounded-sm shadow-sm bg-primary-200 text-primary-800 disabled:cursor-not-allowed disabled:bg-gray-600 disabled:text-gray-400"
+          defaultValue={displayFullName}
+          className="w-full px-5 py-3 rounded-sm shadow-sm bg-primary-200 text-primary-800 disabled:cursor-not-allowed disabled:opacity-70"
         />
       </div>
 
@@ -25,24 +27,11 @@ function UpdateProfileForm({ guest, children }) {
         <label>Email address</label>
         <input
           disabled
-          name={email}
-          defaultValue={email}
-          className="w-full px-5 py-3 rounded-sm shadow-sm bg-primary-200 text-primary-800 disabled:cursor-not-allowed disabled:bg-gray-600 disabled:text-gray-400"
+          name={"email"}
+          defaultValue={displayEmail}
+          className="w-full px-5 py-3 rounded-sm shadow-sm bg-primary-200 text-primary-800 disabled:cursor-not-allowed disabled:opacity-70"
         />
       </div>
-
-      <div className="space-y-2">
-        <div className="flex items-center justify-between">
-          <label htmlFor="nationality">Where are you from?</label>
-          <img
-            src={countryFlag}
-            alt="Country flag"
-            className="h-5 rounded-sm"
-          />
-        </div>
-      </div>
-
-      {children}
 
       <div className="space-y-2">
         <label htmlFor="nationalID">National ID number</label>
@@ -53,9 +42,10 @@ function UpdateProfileForm({ guest, children }) {
         />
       </div>
 
-      <div className="flex items-center justify-end gap-6">
-        {" "}
-        <SubmitButton pendingLabel={"Updating..."}>Update profile</SubmitButton>
+      <div className="flex items-center justify-center">
+        <SubmitButton className="w-full max-w-md" pendingLabel={"Updating..."}>
+          Update profile
+        </SubmitButton>
       </div>
     </form>
   );

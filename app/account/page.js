@@ -12,7 +12,7 @@ export default async function Page() {
   const bookings = await fetchBookings(session.user.guestId);
 
   return (
-    <div className="flex flex-col gap-8 px-4 md:px-0">
+    <div className="flex flex-col gap-8 px-4 md:px-0 max-w-5xl mx-auto w-full">
       {/* Welcome Section */}
       <section id="home" className="flex flex-col gap-2">
         <h2 className="text-2xl font-semibold text-accent-400">
