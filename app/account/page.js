@@ -1,7 +1,8 @@
 import { auth } from "@/app/_lib/auth";
-import ReservationList from "@/app/_components/ReservationList";
 import SignOutButton from "@/app/_components/SignOutButton";
+import ReservationList from "@/app/_components/ReservationList";
 import UpdateProfileForm from "@/app/_components/UpdateProfileForm";
+import { getBookings, getGuest } from "@/app/_lib/data-service";
 
 export const metadata = {
   title: "Guest Area",
@@ -9,7 +10,11 @@ export const metadata = {
 
 export default async function Page() {
   const session = await auth();
-  const bookings = await fetchBookings(session.user.guestId);
+  // Fetch data for mobile sections; desktop won't render these but it's okay to fetch.
+  const [bookings, guest] = await Promise.all([
+    getBookings(session.user.guestId),
+    getGuest(session.user.email),
+  ]);
 
   return (
     <div className="flex flex-col gap-8 px-4 md:px-0 max-w-5xl mx-auto w-full">
@@ -20,8 +25,8 @@ export default async function Page() {
         </h2>
       </section>
 
-      {/* Reservations Section */}
-      <section id="reservations" className="flex flex-col gap-4">
+      {/* Reservations Section (mobile only) */}
+      <section id="reservations" className="flex flex-col gap-4 md:hidden">
         <h3 className="text-xl font-semibold text-accent-400">
           Your Reservations
         </h3>
@@ -33,18 +38,18 @@ export default async function Page() {
             </a>
           </p>
         ) : (
-          <ClientReservationList bookings={bookings} />
+          <ReservationList bookings={bookings} />
         )}
       </section>
 
-      {/* Profile Section */}
-      <section id="profile" className="flex flex-col gap-4">
+      {/* Profile Section (mobile only) */}
+      <section id="profile" className="flex flex-col gap-4 md:hidden">
         <h3 className="text-xl font-semibold text-accent-400">Your Profile</h3>
-        <ClientUpdateProfileForm guest={session.user} />
+        <UpdateProfileForm guest={guest} />
       </section>
 
-      {/* Logout Button */}
-      <div className="mt-8">
+      {/* Logout Button (mobile only; desktop shows in sidebar) */}
+      <div className="mt-8 md:hidden">
         <ClientSignOutButton />
       </div>
     </div>
@@ -52,23 +57,7 @@ export default async function Page() {
 }
 
 // Client wrappers
-function ClientReservationList({ bookings }) {
-  "use client";
-  return <ReservationList bookings={bookings || []} />;
-}
-
 function ClientSignOutButton() {
   "use client";
   return <SignOutButton />;
-}
-
-function ClientUpdateProfileForm({ guest }) {
-  "use client";
-  return <UpdateProfileForm guest={guest} />;
-}
-
-// Fetch bookings server-side
-async function fetchBookings(guestId) {
-  const { getBookings } = await import("@/app/_lib/data-service");
-  return await getBookings(guestId);
 }

@@ -42,8 +42,11 @@ function UpdateProfileForm({ guest }) {
         />
       </div>
 
-      <div className="flex items-center justify-center">
-        <SubmitButton className="w-full max-w-md" pendingLabel={"Updating..."}>
+      <div className="flex items-center justify-center md:justify-start">
+        <SubmitButton
+          className="w-full max-w-md md:w-auto"
+          pendingLabel={"Updating..."}
+        >
           Update profile
         </SubmitButton>
       </div>
