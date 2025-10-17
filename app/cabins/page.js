@@ -14,7 +14,7 @@ export default function Page({ searchParams }) {
   const filter = searchParams?.capacity ?? "all";
 
   return (
-    <div className="overflow-x-hidden max-w-6xl mx-auto">
+    <div className="max-w-6xl mx-auto overflow-x-hidden">
       <h1 className="mb-5 text-4xl font-medium text-accent-400">
         Our Luxury Cabins
       </h1>
@@ -27,7 +27,7 @@ export default function Page({ searchParams }) {
         Welcome to paradise.
       </p>
 
-      <div className="flex justify-center sm:justify-end mb-8">
+      <div className="flex justify-center mb-8 sm:justify-end">
         <Filter />
       </div>
 

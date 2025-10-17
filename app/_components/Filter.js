@@ -17,7 +17,7 @@ function Filter() {
   return (
     <div
       className={
-        "border border-primary-800 flex w-full max-w-full md:max-w-none overflow-x-auto"
+        "border border-primary-800 flex max-w-full md:max-w-none  overflow-x-auto"
       }
     >
       <Button
