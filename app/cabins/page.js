@@ -12,8 +12,9 @@ export const metadata = {
 
 export default function Page({ searchParams }) {
   const filter = searchParams?.capacity ?? "all";
+
   return (
-    <div>
+    <div className="overflow-x-hidden max-w-6xl mx-auto">
       <h1 className="mb-5 text-4xl font-medium text-accent-400">
         Our Luxury Cabins
       </h1>
@@ -26,12 +27,21 @@ export default function Page({ searchParams }) {
         Welcome to paradise.
       </p>
 
-      <div className={"flex justify-end mb-8"}>
+      <div className="flex justify-center sm:justify-end mb-8">
         <Filter />
       </div>
 
       <Suspense fallback={<Spinner />} key={filter}>
-        <CabinList filter={filter} />
+        {/* 
+          Outer flex centers the CabinList itself on small screens.
+          The inner div constrains its width so the cards don't align right.
+        */}
+        <div className="flex justify-center">
+          <div className="w-full max-w-[500px] sm:max-w-none">
+            <CabinList filter={filter} />
+          </div>
+        </div>
+
         <ReservationReminder />
       </Suspense>
     </div>

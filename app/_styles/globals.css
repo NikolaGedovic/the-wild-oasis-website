@@ -38,6 +38,20 @@
   margin: 0 !important;
 }
 
+/* Prevent horizontal scroll on small screens */
+html,
+body {
+  overflow-x: hidden;
+}
+
+/* Add safe padding on smallest viewports to avoid flush-to-edge text */
+@media (max-width: 400px) {
+  main {
+    padding-left: 1rem !important;
+    padding-right: 1rem !important;
+  }
+}
+
 /* Stack two months vertically on small screens while keeping two months visible */
 .daypicker--stack .rdp {
   display: grid;

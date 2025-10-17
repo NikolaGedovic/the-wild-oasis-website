@@ -13,7 +13,7 @@ function CabinCard({ cabin }) {
           src={image}
           alt={`Cabin ${name}`}
           fill
-          sizes="(max-width: 768px) 100vw, (max-width: 1200px) 45vw, 400px"
+          sizes="(max-width: 768px) 100vw, (max-width: 1200px) 45vw, 700px"
           className="object-cover border-b md:border-b-0 md:border-r border-primary-800"
         />
       </div>
